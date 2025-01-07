@@ -11,7 +11,6 @@ const getAllUser = asyncHandler(async (req, res) => {
     });
   });
 
-  console.log(data);
   res.status(200).json({
       message: 'Get all user successfully',
       data: data

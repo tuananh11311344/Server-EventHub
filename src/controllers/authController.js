@@ -93,19 +93,20 @@ const login = asyncHandle(async (req, res) => {
     res.status(403);
     throw new Error("User not found");
   }
-  console.log(typeof password);
 
   const isMatchPassword = await bcrypt.compare(password, existingUser.password);
-  console.log(isMatchPassword);
 
   if (!isMatchPassword) {
     res.status(401);
     throw new Error("Email or Password is not correct!");
   }
+  
   res.status(200).json({
     message: "Login successfully",
     data: {
       id: existingUser.id,
+      fullname: existingUser.fullname,
+      photoUrl: existingUser.photoUrl,
       email: existingUser.email,
       accessToken: await getJsonWebToken(email, existingUser.id),
     },
@@ -144,7 +145,7 @@ const handleLoginWithGoogle = asyncHandle(async (req, res) => {
   const userInfo = req.body;
 
   const existingUser = await UserModel.findOne({ email: userInfo.email });
-  let user = {...userInfo};
+  let user = { ...userInfo };
   if (existingUser) {
     await UserModel.findByIdAndUpdate(existingUser.id, {
       ...userInfo,
