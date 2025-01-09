@@ -24,5 +24,5 @@ app.use("/events", verifyToken, eventRouter);
 app.use(errorMiddleHandle);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port http://10.10.65.2:${PORT}`);
+  console.log(`Server is running on port http://10.10.65.9:${PORT}`);
 });
